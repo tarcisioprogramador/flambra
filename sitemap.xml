@@ -1,61 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://flambra.com.br/</loc>
+    <loc>https://tarcisioprogramador.github.io/flambra/</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://flambra.com.br/blog/</loc>
-    <lastmod>2026-08-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://flambra.com.br/blog/como-comecar-ganhar-dinheiro.html</loc>
+    <loc>https://tarcisioprogramador.github.io/flambra/como-funciona.html</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://flambra.com.br/blog/sistema-de-indicacao.html</loc>
+    <loc>https://tarcisioprogramador.github.io/flambra/indicar.html</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://flambra.com.br/blog/como-divulgar-link.html</loc>
-    <lastmod>2026-08-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://flambra.com.br/blog/estrategias-indicacoes.html</loc>
-    <lastmod>2026-08-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://flambra.com.br/blog/guia-iniciantes.html</loc>
-    <lastmod>2026-08-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://flambra.com.br/blog/perguntas-frequentes.html</loc>
+    <loc>https://tarcisioprogramador.github.io/flambra/sobre.html</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://flambra.com.br/legal/politica-de-privacidade.html</loc>
+    <loc>https://tarcisioprogramador.github.io/flambra/legal/politica-de-privacidade.html</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://flambra.com.br/legal/termos-de-uso.html</loc>
+    <loc>https://tarcisioprogramador.github.io/flambra/legal/termos-de-uso.html</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

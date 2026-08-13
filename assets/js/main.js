@@ -83,40 +83,4 @@ document.addEventListener("DOMContentLoaded", function() {
   if (calcPeople) calcPeople.addEventListener("input", updateCalc);
   if (calcHours) calcHours.addEventListener("input", updateCalc);
   updateCalc();
-
-  var si = document.querySelector(".blog-search"), cards = document.querySelectorAll(".article-card");
-  if (si && cards.length) {
-    si.addEventListener("input", function() {
-      var q = this.value.toLowerCase();
-      cards.forEach(function(c) {
-        var t = (c.querySelector(".card-title") || {}).textContent || "";
-        var x = (c.querySelector(".card-excerpt") || {}).textContent || "";
-        c.style.display = (t.toLowerCase().indexOf(q) > -1 || x.toLowerCase().indexOf(q) > -1) ? "" : "none";
-      });
-    });
-  }
-  document.querySelectorAll(".cat-btn").forEach(function(catBtn) {
-    catBtn.addEventListener("click", function() {
-      document.querySelectorAll(".cat-btn").forEach(function(b) { b.classList.remove("active"); });
-      this.classList.add("active");
-      var cat = this.dataset.cat;
-      if (cards) cards.forEach(function(c) {
-        c.style.display = (cat === "all" || c.dataset.cat === cat) ? "" : "none";
-      });
-    });
-  });
-
-  var pb = document.querySelector(".reading-bar");
-  if (pb) window.addEventListener("scroll", function() {
-    pb.style.width = ((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100) + "%";
-  });
-
-  document.querySelectorAll(".share-btn").forEach(function(b) {
-    b.addEventListener("click", function() {
-      var url = window.location.href, act = this.dataset.share;
-      if (act === "copy") navigator.clipboard.writeText(url);
-      else if (act === "whatsapp") window.open("https://wa.me/?text=" + encodeURIComponent(document.title + " " + url));
-      else if (act === "twitter") window.open("https://twitter.com/intent/tweet?url=" + encodeURIComponent(url));
-    });
-  });
 });
