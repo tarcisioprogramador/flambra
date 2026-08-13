@@ -1,78 +1,89 @@
 document.addEventListener("DOMContentLoaded", function() {
-  // Mobile menu
-  var btn = document.querySelector(".menu-toggle");
-  var nav = document.querySelector(".mobile-nav");
+  var btn = document.querySelector("#mobileMenuToggle");
+  var nav = document.querySelector("#mobileMenu");
   if (btn && nav) {
     btn.addEventListener("click", function() {
-      nav.classList.toggle("open");
+      var open = nav.classList.toggle("open");
       btn.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open);
+      nav.setAttribute("aria-hidden", !open);
     });
     nav.querySelectorAll("a").forEach(function(a) {
       a.addEventListener("click", function() {
         nav.classList.remove("open");
         btn.classList.remove("open");
+        btn.setAttribute("aria-expanded", "false");
+        nav.setAttribute("aria-hidden", "true");
       });
     });
   }
-  // Header scroll
+
   var header = document.querySelector(".site-header");
   if (header) {
     window.addEventListener("scroll", function() {
       header.classList.toggle("scrolled", window.scrollY > 50);
     });
   }
-  // Scroll animations
+
   var obs = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
       if (e.isIntersecting) { e.target.classList.add("visible"); obs.unobserve(e.target); }
     });
   }, {threshold: 0.1});
   document.querySelectorAll(".anim").forEach(function(el) { obs.observe(el); });
-  // FAQ toggle
-  document.querySelectorAll(".faq-item summary").forEach(function(s) {
-    s.addEventListener("click", function() {
-      var item = this.parentElement;
-      document.querySelectorAll(".faq-item[open]").forEach(function(o) {
-        if (o !== item) o.removeAttribute("open");
+
+  document.querySelectorAll(".faq-question").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      var item = this.closest(".faq-item");
+      var answer = item.querySelector(".faq-answer");
+      var isOpen = answer.classList.contains("open");
+      document.querySelectorAll(".faq-answer.open").forEach(function(a) {
+        a.classList.remove("open");
+        a.previousElementSibling.setAttribute("aria-expanded", "false");
       });
+      if (!isOpen) {
+        answer.classList.add("open");
+        this.setAttribute("aria-expanded", "true");
+      }
     });
   });
-  // Smooth scroll
+
   document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     a.addEventListener("click", function(e) {
       var t = document.querySelector(this.getAttribute("href"));
       if (t) { e.preventDefault(); t.scrollIntoView({behavior:"smooth"}); }
     });
   });
-  // Rate toggle
-  var rateEl = document.querySelector(".rate-display");
-  if (rateEl) setInterval(function() { rateEl.classList.toggle("show-monthly"); }, 3000);
-  // Calculator
-  var ps = document.querySelector(".calc-people"), hs = document.querySelector(".calc-hours"), rv = document.querySelector(".calc-result");
+
+  var rateToggle = document.getElementById("rateToggle");
+  if (rateToggle) {
+    var showMonthly = false;
+    setInterval(function() {
+      showMonthly = !showMonthly;
+      rateToggle.textContent = showMonthly ? "R$4.500/mes" : "R$25/h";
+    }, 3000);
+  }
+
+  var calcPeople = document.getElementById("calcPeople");
+  var calcHours = document.getElementById("calcHours");
   function updateCalc() {
-    if (!ps || !hs || !rv) return;
-    var m = parseInt(ps.value) * parseInt(hs.value) * 30 * 2.5;
-    rv.textContent = "R$ " + m.toLocaleString("pt-BR");
-    document.querySelector(".calc-people-val").textContent = ps.value;
-    document.querySelector(".calc-hours-val").textContent = hs.value + "h/dia";
-    document.querySelector(".calc-formula").textContent = ps.value + " x " + hs.value + "h/dia x 30 dias";
+    if (!calcPeople || !calcHours) return;
+    var p = parseInt(calcPeople.value);
+    var h = parseInt(calcHours.value);
+    var hourly = p * h * 2.5;
+    var monthly = hourly * 30;
+    var yearly = monthly * 12;
+    var fmt = function(v) { return "R$" + v.toLocaleString("pt-BR", {minimumFractionDigits:2, maximumFractionDigits:2}); };
+    document.getElementById("calcPeopleValue").textContent = p;
+    document.getElementById("calcHoursValue").textContent = h + "h";
+    document.getElementById("calcHourly").textContent = fmt(hourly);
+    document.getElementById("calcMonthly").textContent = fmt(monthly);
+    document.getElementById("calcYearly").textContent = fmt(yearly);
   }
-  if (ps) ps.addEventListener("input", updateCalc);
-  if (hs) hs.addEventListener("input", updateCalc);
+  if (calcPeople) calcPeople.addEventListener("input", updateCalc);
+  if (calcHours) calcHours.addEventListener("input", updateCalc);
   updateCalc();
-  // Earn calculator
-  var es = document.querySelector(".earn-hours"), ev = document.querySelector(".earn-result"), ed = document.querySelector(".earn-daily");
-  function updateEarn() {
-    if (!es) return;
-    var h = parseInt(es.value), d = h * 25, m = d * 30;
-    if (ev) ev.textContent = "R$ " + m.toLocaleString("pt-BR") + " / mês";
-    if (ed) ed.textContent = h + " horas por dia — até R$ " + d + "/dia aprovado";
-    var hl = document.querySelector(".earn-hours-val");
-    if (hl) hl.textContent = h + "h";
-  }
-  if (es) es.addEventListener("input", updateEarn);
-  updateEarn();
-  // Blog search
+
   var si = document.querySelector(".blog-search"), cards = document.querySelectorAll(".article-card");
   if (si && cards.length) {
     si.addEventListener("input", function() {
@@ -84,23 +95,22 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     });
   }
-  // Category filter
-  document.querySelectorAll(".cat-btn").forEach(function(btn) {
-    btn.addEventListener("click", function() {
+  document.querySelectorAll(".cat-btn").forEach(function(catBtn) {
+    catBtn.addEventListener("click", function() {
       document.querySelectorAll(".cat-btn").forEach(function(b) { b.classList.remove("active"); });
       this.classList.add("active");
       var cat = this.dataset.cat;
-      cards.forEach(function(c) {
+      if (cards) cards.forEach(function(c) {
         c.style.display = (cat === "all" || c.dataset.cat === cat) ? "" : "none";
       });
     });
   });
-  // Reading progress
+
   var pb = document.querySelector(".reading-bar");
   if (pb) window.addEventListener("scroll", function() {
     pb.style.width = ((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100) + "%";
   });
-  // Share
+
   document.querySelectorAll(".share-btn").forEach(function(b) {
     b.addEventListener("click", function() {
       var url = window.location.href, act = this.dataset.share;
